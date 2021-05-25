@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:5000/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="./Schedule - Wonder WebRTC unConference May 18th_files/css" rel="stylesheet">
+    <link href="./Schedule - Wonder WebRTC unConference May 18th_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./Schedule - Wonder WebRTC unConference May 18th_files/font-awesome.css">
+    <link rel="stylesheet" href="./Schedule - Wonder WebRTC unConference May 18th_files/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="./Schedule - Wonder WebRTC unConference May 18th_files/index.css">
+    <title>Schedule - Wonder WebRTC unConference May 18th</title>
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1012.0" data-gr-ext-installed="" style="">
+
+    <!-- <nav>
+      <div class="container-fluid">
+        <div class="row justify-content-start">
+            <div class="col-12">
+              <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#createSessionModal">
+                Propose Session
+              </button>
+            </div>
+        </div>
+    </nav> -->
+
+    <div class="modal fade" id="createSessionModal" tabindex="-1" aria-labelledby="createSessionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createSessionModalLabel">Submit Your Session</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Please submit your session along with the estimated session length. During the session planning, we are going to assign the start time.
+            </p>
+            <form id="submitForm" class="needs-validation" novalidate="">
+              <div class="form-group">
+                <label for="inputSessionName">Session Name</label>
+                <input type="text" class="form-control" id="inputSessionName" placeholder="" required="">
+              </div>
+              <div class="form-group">
+                <label for="inputHostName">Your Name</label>
+                <input type="text" class="form-control" id="inputHostName" placeholder="" required="">
+              </div>
+              <div class="form-group">
+                <label for="inputHostLink">Your Profile Link (GitHub, Twitter, LinkedIn...)</label>
+                <input type="url" class="form-control" id="inputHostLink" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <textarea class="form-control" id="inputDescription" rows="7" required=""></textarea>
+              </div>
+              <div class="form-group">
+                <label for="inputDuration">Session Length (Minutes)</label>
+                <input type="number" class="form-control" id="inputDuration" placeholder="0" min="0" required="">
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="submit-session-button">Submit session</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="updateSessionModal" tabindex="-1" aria-labelledby="updateSessionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateSessionModalLabel">Edit Your Session</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancel"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateForm" class="needs-validation" novalidate="">
+              <input type="hidden" id="updateSessionId">
+              <div class="form-group">
+                <label for="inputSessionName">Session Name</label>
+                <input type="text" class="form-control" id="updateSessionName" placeholder="" required="">
+              </div>
+              <div class="form-group">
+                <label for="updateHostName">Your Name</label>
+                <input type="text" class="form-control" id="updateHostName" placeholder="" required="">
+              </div>
+              <div class="form-group">
+                <label for="updateHostLink">Your Profile Link (GitHub, Twitter, LinkedIn...)</label>
+                <input type="url" class="form-control" id="updateHostLink" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="updateDescription">Description</label>
+                <textarea class="form-control" id="updateDescription" rows="7" required=""></textarea>
+              </div>
+              <div class="form-group">
+                <label for="updateDuration">Session Length (Minutes)</label>
+                <input type="number" class="form-control" id="updateDuration" placeholder="0" min="0" required="">
+              </div>
+              <div class="form-group">
+                <label for="updateTime">Start Time (Set during planning)</label>
+                <input type="text" class="form-control" id="updateSessionTime" placeholder="0:00">
+              </div>
+              <!-- <div class="form-group">
+                <label for="updateDeleted">Deleted</label>
+                <select class="form-control" name="updateDeleted" id="updateDeleted">
+                    <option value="0">False</option>
+                    <option value="1">True</option>
+                </select>
+              </div> -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="update-session-button">Update session</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="error-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="container-fluid">
+        <div class="row justify-content-start">
+            <div class="col-12">
+              <div id="scheduleTable_wrapper" class="dataTables_wrapper no-footer"><table id="scheduleTable" class="table table-sm dataTable no-footer" cellspacing="0" width="100%" role="grid" style="width: 100%;">
+                <thead>
+                  <tr role="row"><th class="th-sm dt-nowrap name sorting" tabindex="0" aria-controls="scheduleTable" rowspan="1" colspan="1" aria-label="Session Name
+                    : activate to sort column ascending" style="width: 1232px;">Session Name
+                    </th><th class="th-sm" rowspan="1" colspan="1">
+                    </th></tr>
+                </thead>
+                <tbody>
+                <tr class="group"><td colspan="6">6:40</td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-31" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>What additional browser APIs would be useful to standardize?</h3>
+                          <h5><a href="https://twitter.com/dontcallmedom" target="_blank">Dom Hazael-Massieux (W3C)</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          What browser APIs would be useful to standardize to make WebRTC even more useful? This is not a talk but an open discussion.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-30" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 6:50 (10 mins)</small>
+                          <h3>Collect and analyse webrtc stats and samples</h3>
+                          <h5><a href="https://www.linkedin.com/in/balazskreith/" target="_blank">Balazs Kreith</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          We are actively developing an open-source project called ObserveRTC, which we are aimed to provide a solution to collect and analyze webrtc stats for further analysis.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-29" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>JamRTC -- Jam sessions with Janus</h3>
+                          <h5><a href="https://twitter.com/elminiero?lang=en" target="_blank">Lorenzo Miniero</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          I did a talk at FOSDEM on how WebRTC can help musicians, and more in general on music scenarios. One of the ideas that came out there was a native application to do jam sessions online with WebRTC. JamRTC is a first experimental attempt at doing that, using Jack to capture/playback audio, and Janus as a WebRTC SFU. Very far away from being done, but I'd like to talk about it and gather feedback/ideas.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-28" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>End-to-end encrypted file sending over WebRTC and WebTorrent</h3>
+                          <h5><a href="https://twitter.com/feross" target="_blank">Feross Aboukhadijeh</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Why don't web services end-to-end encrypt your data? Take a service like Dropbox –&nbsp;they transfer your data and store&nbsp;it encrypted but they don't mention that **they have the key to unlock your files**. The solution is end-to-end encryption (E2EE). With E2EE, data is encrypted and decrypted only at the "end points". Can we add end-to-end encryption to more services? Let's explore the limits of what web browsers can do – especially in terms of shifting computation to the client-side, to improve the security and privacy of web apps. (For context, Feross recently launched Wormhole https://wormhole.app –&nbsp;an end-to-end encrypted file sending service powered by WebRTC and WebTorrent.)
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-13" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>XDN (Experience Delivery Network) a New Paradigm in Scaling WebRTC</h3>
+                          <h5><a href="https://unconf.wonder.me/participants/chris-allen" target="_blank">Chris Allen</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          An open discussion on scalable cloud architecture as it applies to live video streaming applications. Chris will show how they've leveraged generalized cloud platforms to build their XDN solution.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-11" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>Women's perspectives wanted: Using WebRTC to build a powerful peer/mentor/friend network for professional women</h3>
+                          <h5><a href="https://www.linkedin.com/in/chelsea-lowry/" target="_blank">Chelsea Lowry</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          This will be a group discussion where I am eager to hear experiences and preferences from women professionals, particularly those who may have few women peers and mentors due to working in male-dominated roles and industries. I am a founder that is building a better way for ambitious professional women to meaningfully connect -- whether creating new professional and social circles from scratch when you move, finding new peers and mentors when you take on promotions, finding accountability partners when pursuing a new goal or interest, or simply having more fun when you have rare free time that you want to make the most of (at home, when traveling for work, etc.). We have been exploring different approaches to tools and integrations that better facilitate digital conversations and connections (including Wonder rooms!), as well as simplifying digital follow-up from interactions that happen in the real world. Let's chat more about how you'd like to meaningfully connect with others, great experiences you've had, and what you don't like about solutions you've tried in the past.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-9" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>AV over IP for meeting rooms using WebRTC (think Google Stadia like)</h3>
+                          <h5><a href="https://www.linkedin.com/in/darylhutchings/" target="_blank">Daryl Hutchings</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          I would like to get the communities opinion on the future of meeting room hardware and think about how the computer doesn't have to be in the room itself
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-8" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>6:40 - 7:10 (30 mins)</small>
+                          <h3>Why WebRTC is the best space in tech</h3>
+                          <h5><a href="https://www.linkedin.com/in/graves-dev/" target="_blank">Garrett Graves</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          This session will be about my personal journey into WebRTC and why I think real time communication is one of the best spaces in tech due to opportunity and potential for revolution.
+                      </div>
+                    </div>
+                    </td></tr><tr class="group"><td colspan="6">7:15</td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-33" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>Multi-Party video calls with low code</h3>
+                          <h5>Binoy Chemmagate</h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          How to build multi-party video conferencing applications quicker and onboard customers quicker. This would allow emerging verticals in WebRTC to build video services faster and more efficiently.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-26" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:35 (20 mins)</small>
+                          <h3>Collaborative Music with Web MIDI and WebRTC</h3>
+                          <h5><a href="https://twitter.com/philmillman" target="_blank">Phil Miller</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          WebRTC has enabled a proliferation of real-time media, even further accelerated by the events of the last year. This means that people have found more creative and personal ways to engage with the art they are passionate about: live streams, artist meet-and-greets, 2D and 3D online words, to name a few. But can they be more collaborative? More engaging? 
+
+I think they can, and with technology from the 80s 🎹, no less! Using a simple web interface and a video call, let’s see if we can use WebMIDI to control music hardware. 
+
+If you’re passionate about the intersection of the web and music hardware then this is the session for you! 
+
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-25" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>Scaling WebRTC for Large Rooms</h3>
+                          <h5><a href="https://www.twitter.com/anarchyco" target="_blank">Gustavo Garcia</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Discuss challenges and ideas to provide a good user experience in large rooms using WebRTC technology.  This semi-talk session will include a 5-10 mins presentation to frame the discussion and can take anything from 15 mins to 45 mins after that depending on the ideas and interest of the topic.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-24" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>Monitoring WebRTC Roundtable: how do we do it?</h3>
+                          <h5><a href="https://www.linkedin.com/in/lmangani/" target="_blank">Lorenzo Mangani</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          At HOMER we want to provide RTC/VoIP users, superusers and developers with the best unified OSS Monitoring tools for the job. How is the community monitoring today and what would/could make our life easier and set us all on a free and open source path towards operational excellence? https://github.com/sipcapture/homer
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-22" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:30 (15 mins)</small>
+                          <h3>Building a self-hosted solution to stream workshops at CRANS student network organization</h3>
+                          <h5><a href="https://github.com/erdnaxe" target="_blank">Alexandre Iooss</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Presentation of the different solutions that students from CRANS organization tried to self-host remote workshops, and why we are now using Galène videoconference server rather than HLS or our custom Pion-based server. 7-10 minutes presentation then discussion.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-18" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>Where not to use WebRTC</h3>
+                          <h5><a href="https://www.linkedin.com/in/shammahk/" target="_blank">Shammah Nei</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Experts shed light on the tradeoffs of WebRTC and alternatives to webRTC. Where WebRTC is the best choice and where it isn't. Use cases and optimization issues and processes.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-17" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>The Wonder Story &amp; How should we go from here?</h3>
+                          <h5><a href="https://unconf.wonder.me/participants/leonard-witteler" target="_blank">Leonard Witteler</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Format: Show&amp;Tell and group discussion.
+
+In the first part (10 min), Leo will share the short but exciting ride we had with building Wonder without actual WebRTC expert knowledge. He will drive you through the history from the first prototype, to hyper-growth, architectural challenges and share the bad&amp;good moments. 
+
+In the second part (20 min), we'd like like to call for an open discussion on how to best go forward from here. We don't make it a secret that we are no WebRTC gurus and would love to hear the many different perspectives on how to build a highly scalable platform while being able to focus on the product vs re-inventing the wheel.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-6" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:30 (15 mins)</small>
+                          <h3>Building a Pion-powered SFU: Peer Calls</h3>
+                          <h5><a href="https://github.com/jeremija" target="_blank">Jerko Steiner</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          After moving abroad I wanted more control over my communication with friends and family, so I built Peer Calls — an open-source video conferencing platform. Up until v4, it was a simple peer-to-peer service with a signalling server written in NodeJS. However, the client-side would quickly become resource intensive as more people joined the call. In 2020, after COVID struck and more people started working from home I started getting inquiries about improving the performace, so I rewrote the backend in Go and added SFU support powered by Pion. This is a story about that journey, and the hoops I had to jump through to make Peer Calls functional on all major browsers, including Android and iOS.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-2" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:15 - 7:45 (30 mins)</small>
+                          <h3>Bursting the WebRTC Myth</h3>
+                          <h5><a href="https://unconf.wonder.me/participants/saurav-panda" target="_blank">Saurav Panda</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          On common myths related to WebRTC. It will cover up to 5 common myths related to WebRTC fundamentals, STUN / TURN server, Signalling Server, Scaling etc.
+                      </div>
+                    </div>
+                    </td></tr><tr class="group"><td colspan="6">7:55</td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-27" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:55 - 8:15 (20 mins)</small>
+                          <h3>Streaming from vehicles - packet loss and latency</h3>
+                          <h5><a href="https://www.linkedin.com/in/zhukovalex/" target="_blank">Alex Zhukov</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          I want to show a (hopefully) cool demo of me live streaming from moving vehicles, talk about my approach to fighting packet loss and decreasing latency
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-21" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:55 - 8:15 (20 mins)</small>
+                          <h3>Scalable Video Coding in VP8, VP9 and AV1</h3>
+                          <h5><a href="https://github.com/jech" target="_blank">Juliusz Chroboczek</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          During a videoconference, the receivers have different links, and therefore need to receive video at different throughputs.  The traditional solution to this problem is called "simulcast", where the sender encodes multiple independent streams at different qualities and the server selects which stream is forwarded to each receiver.
+The successor to simulcast is called Scalable Video Coding (SVC).  With SVC, the sender sends a single "scalable" stream, which interleaves low- and high-quality frames.  The server decides, for each receiver, which frames to forward and which packets to strip.  The main advantage of SVC over simulcast is that switching drop strategies is a lightweight operation, and that SVC can therefore react to fine-grained congestion indications.
+The Galene video server (https://galene.org) recently acquired the ability to perform SVC stripping.  In this talk, I'll describe how SVC works in VP8, VP9 and AV1, how it is implemented in Galene, and what new features we can look forward to with the upcoming AV1 codec. 
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-20" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:55 - 8:25 (30 mins)</small>
+                          <h3>Improving webrtc for people with disabilities</h3>
+                          <h5><a href="https://www.linkedin.com/in/dtaht/" target="_blank">Dave Taht</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          My principal use for videoconferencing is because I am blind in one eye and deaf in one ear. Until the rise of webrtc I relied on skype and its emacs interface to cope with many interactions and I often find it difficult to find various icons and interfaces in all the webrtc 
+clients and web browsers I've been asked to cope with. 
+
+I am a very accomplished lipreader.
+
+Discovering that the now common, and mandatory TFA texting methoddidn't work with skype, recently, was no fun. skype rings all my devices,nothing else does.
+
+And if I lose the other eye or other ear, I will have really insurmountable problems. Knowing this, I've worked really hard to make videoconferencing work well, starting with my work in the rmcat working group years ago,and continuing with some excitement into galene now, where, finally having access into a SFU, I can make a difference.
+
+It's oft kind of difficult for me to talk publicly about my problems, and ask others to help solve them...&nbsp;but here I am proposing this session. I would&nbsp; really like webrtc clients to have working speech to text (and text to speech), in particular.&nbsp;And an emacspeak interface. Solid lipreading code and tight voice/face sync. 3d positional audio would be nice, also, using ambisonics. 
+
+Also a debate feature where each participant would be limited by the software to a 2 minute speaking time with a visual clock, would be nice. I've been harangued a bit too often of late, and merely raising my hand to invoke robert's rules of order not work well enough.&nbsp;When I can find the "raise hand" icon.
+
+An audio replay feature would be good (play back the last 30 seconds of what was said)
+
+And better congestion control and higher quality audio would be nice. 
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-19" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:55 - 8:25 (30 mins)</small>
+                          <h3>The WebRTC infrastructure attack surface</h3>
+                          <h5><a href="https://www.rtcsec.com/about/" target="_blank">Sandro Gauci / Alfred Farrugia</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Format: Show&amp;tell then group discussion. First we'd like to introduce the various different parts of the infrastructure that we (as security researchers and pentesters) think have a significant attack surface, and give a few examples from past experiences. Then we invite people in the group to join in the discussion and help expand knowledge of the attack surface. The focus of the discussion is to learn about what are the areas in WebRTC infrastructure that are security sensitive and therefore need to be tested for security issues.
+
+About the hosts: Sandro and Alfred make up Enable Security where they develop security tools for RTC testing (SIPVicious), help companies test their RTC and perform penetration testing and security research on VoIP and WebRTC targets.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-16" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>7:55 - 8:25 (30 mins)</small>
+                          <h3>WebRTC for Peer-to-Peer File Streaming between Browsers and Native with WebTorrent</h3>
+                          <h5><a href="https://unconf.wonder.me/participants/paul-louis-ageneau" target="_blank">Paul-Louis Ageneau</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          WebTorrent is a peer-to-peer file streaming client written in JavaScript. WebTorrent leverages WebRTC to bring peer-to-peer in browsers by running BitTorrent over WebRTC DataChannels.
+I've recently created the first native implementation of WebTorrent by integrating libdatachannel (a light WebRTC C/C++ library I maintain) in libtorrent, which opens exiting new possibilities for content distribution. The goal of this session to show a niche usage of WebRTC, share the adventure, and discuss the future.
+                      </div>
+                    </div>
+                    </td></tr><tr class="group"><td colspan="6">8:00</td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-7" class="session-item scheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>8:00 - 8:30 (30 mins)</small>
+                          <h3>Remote robot football</h3>
+                          <h5><a href="https://unconf.wonder.me/participants/tim-panton" target="_blank">Tim Panton</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          I'll host a remote robot football session for 4 players. Over webRTC of course.
+
+Join here:
+
+https://dev.pi.pe/session.html?id=080519FD43CBDB70E98DC93F59C55A948C9D2FA419C49BD6B951091050CD831A:5B3DB334D43336198149677F987B197D
+
+First 4 people in will get to drive - next 4 will audio+video
+When you quit a new joiner will take your slot.
+                      </div>
+                    </div>
+                    </td></tr><tr class="group"><td colspan="6">Canceled</td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-34" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Canceled (10 mins)</small>
+                          <h3>Appearance (Canceled)</h3>
+                          <h5>Niels Jerl</h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Get your appearance good from the start. Basic on sound and picture
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-15" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Canceled (30 mins)</small>
+                          <h3>Screensharing is broken (Canceled)</h3>
+                          <h5><a href="https://www.linkedin.com/in/arnaudbud/" target="_blank">Arnaud Budkiewicz</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          While browsers have greatly improved the user experience for screen sharing, plenty of tips remain to make for a unique experience. Eliminating the famed “hall of mirrors”, improved tab/application sharing and better presenter tools will be discussed here.
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-14" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Canceled (30 mins)</small>
+                          <h3>Fault tolerant streaming architecture (Canceled)</h3>
+                          <h5><a href="https://www.linkedin.com/in/davidengelmaier/" target="_blank">David Engelmaier</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Making sure the peers are able to connect can be a complex task to tackle. This session will present guidelines on fault tolerant techniques for the session negotiation.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-12" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Canceled (30 mins)</small>
+                          <h3>CANCELED - WebRTC for Spot - CANCELED</h3>
+                          <h5><a href="https://www.linkedin.com/in/cbentzel/" target="_blank">Chris Bentzel</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          CANCELED - Unfortunately the time for this slot conflicts with a previous commitment.
+
+Hope all of you have a great event!
+
+-----
+
+Boston Dynamics has been using WebRTC for teleoperation of Spot - our quadruped robot.
+
+This will be a ~15 minute talk with lots of time for questions and discussion. It will cover how Spot is used in operation, why we chose WebRTC, and some of  the challenges we have encountered.
+
+                      </div>
+                    </div>
+                    </td></tr><tr class="group"><td colspan="6">Unscheduled</td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-32" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Unscheduled (15 mins)</small>
+                          <h3>Discussion on Together mode</h3>
+                          <h5><a href="https://www.twitter.com/aswath" target="_blank">Aswath</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Yday Microsoft opened up Teams for consumers, including "Together mode:. They say this reduces video fatigue. The idea is using AI, they extract face and hand movements of participants and present it on the screen in a virtual room background. So it will look like all the participants are present in this room. The idea of the session is to have a discussion on the desirability of this mode.
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-23" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Unscheduled (30 mins)</small>
+                          <h3>Scaling WebRTC like pro</h3>
+                          <h5><a href="https://www.linkedin.com/in/arjun-kava/" target="_blank">Arjun Kava</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          Maybe I can not make it, due to technical issues. 
+                      </div>
+                    </div>
+                    </td></tr><tr class="even"><td class=" dt-nowrap name">
+                    <div id="session-item-10" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Unscheduled (30 mins)</small>
+                          <h3>Automated Writing and Journalism</h3>
+                          <h5><a href="https://unconf.wonder.me/" target="_blank">Giovanni</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          simple group discussion and lighting talk
+                      </div>
+                    </div>
+                    </td></tr><tr class="odd"><td class=" dt-nowrap name">
+                    <div id="session-item-5" class="session-item unscheduled">
+                      <div class="header">
+                        <div class="summary">
+                          <small>Unscheduled (15 mins)</small>
+                          <h3>Case Study: Pion @ StreamHuddle</h3>
+                          <h5><a href="https://twitter.com/leewardbound" target="_blank">Leeward Bound</a></h5>
+                        </div>
+                      
+                      </div>
+                      <div class="description">
+                          How my wife and I started with no video experience and built a cloud compositing platform for group broadcasts using projects from the Pion ecosystem!
+                      </div>
+                    </div>
+                    </td></tr></tbody>
+              </table></div>
+            </div>
+          </div>
+        </div>
+      
+    </main>
+
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/jquery.tablednd.js" integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/jquery.dataTables.min.js"></script>
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/moment.min.js"></script>
+
+    <script src="./Schedule - Wonder WebRTC unConference May 18th_files/index.js"> </script>
+  
+
+</body></html>

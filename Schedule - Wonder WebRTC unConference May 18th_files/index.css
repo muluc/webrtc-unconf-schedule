@@ -1,0 +1,210 @@
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+  bottom: 0.5em;
+}
+
+table.dataTable tbody td {
+  vertical-align: middle;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  margin-left: 0;
+  font-size: 1.4em;
+  border-radius: 5px;
+  border: 2px solid #fff 0.8;
+  color: #333;
+  background-image: url("search.svg");
+  background-repeat: no-repeat;
+  background-position: center right !important;
+}
+
+div.dataTables_wrapper  div.dataTables_filter input::placeholder, /* Chrome, Firefox, Opera, Safari 10.1+ */
+div.dataTables_wrapper  div.dataTables_filter input:-ms-input-placeholder, /* Internet Explorer 10-11 */
+div.dataTables_wrapper  div.dataTables_filter input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #fff !important;
+  opacity: 1; /* Firefox */
+}
+
+div.dataTables_wrapper button.update {
+  margin-left: 10px;
+}
+
+div.dataTables_wrapper .dt-wide-column {
+  max-width: 250px;
+  min-width: 200px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+a {
+  color: rgb(55, 53, 47);
+}
+
+.container {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+header {
+  margin: 3em 0;
+}
+
+header h1 {
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.2);
+}
+
+nav {
+  margin: 1.5em 0;
+}
+
+main {
+  padding: 0 0 50px 0;
+}
+
+#scheduleTable {
+  background: #fff;
+  padding: 0;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0 20px;
+  /* -webkit-box-shadow: 0px 1px 9px 5px rgba(255,255,255,0.10);
+  box-shadow: 0px 1px 9px 5px rgba(255,255,255,0.10); */
+}
+
+#scheduleTable thead {
+  border: 0;
+  display: none;
+}
+
+#scheduleTable tbody {
+  border: 0;
+}
+
+#scheduleTable th {
+  font-weight: 600;
+  font-size: 1.3em;
+  border: 0;
+  text-align: center;
+  color: #333;
+  white-space: nowrap;
+  padding: 20px 15px;
+  background: none !important;
+}
+
+#scheduleTable tbody tr {
+  border: 0;
+  border-radius: 15px;
+  padding-top: 15px;
+  background: transparent;
+  -webkit-box-shadow: 0px 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  /* cursor: pointer; */
+}
+
+#scheduleTable tbody tr.group, #scheduleTable tbody tr.group:hover {
+  border: 0;
+  padding: 0;
+  background: none !important;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+#scheduleTable tbody tr.group td {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #000;
+  white-space: nowrap;
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
+#scheduleTable tbody tr:hover {
+  -webkit-box-shadow: 0px 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+#scheduleTable td {
+  color: #666;
+  border-bottom: 0;
+  padding: 20px 15px;
+
+}
+
+.session-item {
+  width: 100%;
+}
+
+
+
+.session-item .header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.session-item .header small {
+  border-radius: 5px;
+  padding: .2em .4em;
+  background: rgba(220,53,69,.1);
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace,Courier;
+}
+
+.session-item.scheduled .header small {
+  background: rgba(40,167,69,.15);
+}
+
+.session-item .header h3 {
+  margin-top: 0.5rem;
+  color: rgb(55, 53, 47);
+  font-weight: bold;
+}
+
+.session-item .summary {
+  white-space: normal;
+}
+
+.session-item.unscheduled button.join {
+  display: none;
+}
+
+
+.session-item .description {
+  margin-top: 10px;
+  white-space: normal;
+}
+
+.dragHandle {
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: .5rem;
+}
+
+/* .invalid class prevents CSS from automatically applying */
+.invalid input:required:invalid {
+  background: #BE4C54;
+}
+
+/* Mark valid inputs during .invalid state */
+.invalid input:required:valid {
+  background: #17D654;
+}
